@@ -6,11 +6,11 @@ const messagesReducer = createReducer([], (builder) => {
     .addCase(actions.addMessageSuccess, (state, { payload: { message } }) => [...state, message]);
 });
 
-const channelsReducer = createReducer([], (builder) => {
+const channelsReducer = createReducer([], () => {
 
 });
 
-const currentChannelIdReducer = createReducer(null, (builder) => {
+const currentChannelIdReducer = createReducer(null, () => {
 
 });
 

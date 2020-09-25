@@ -34,11 +34,18 @@ const NewMessageForm = (props) => {
     initialValues: {
       body: '',
     },
-    onSubmit: ({ body }) => {
+    onSubmit: async ({ body }, { resetForm, setErrors }) => {
       const message = { nickname, body };
 
-      addMessage(currentChannelId, message);
-      formik.resetForm();
+      try {
+        await addMessage(currentChannelId, message);
+        resetForm();
+      } catch (error) {
+        console.log(error);
+        setErrors({ networkError: error.message });
+      }
+
+      inputRef.current.select();
     },
   });
 
@@ -54,9 +61,13 @@ const NewMessageForm = (props) => {
             value={formik.values.body}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            disabled={formik.isSubmitting}
           />
           <Button type="submit" aria-label="submit" variant="primary" disabled={formik.isSubmitting}>Submit</Button>
-          <FormControl.Feedback className="d-block" type="invalid">&nbsp;</FormControl.Feedback>
+          <FormControl.Feedback className="d-block" type="invalid">
+            {formik.errors.networkError}
+            &nbsp;
+          </FormControl.Feedback>
         </div>
       </FormGroup>
     </Form>
