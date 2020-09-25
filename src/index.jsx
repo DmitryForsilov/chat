@@ -29,7 +29,9 @@ const store = configureStore({
   preloadedState: gon,
 });
 
-cookies.set('nickname', faker.internet.userName());
+if (!cookies.get('nickname')) {
+  cookies.set('nickname', faker.internet.userName());
+}
 
 const socket = io();
 socket.on('newMessage', ({ data: { attributes } }) => {

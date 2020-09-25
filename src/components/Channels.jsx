@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { connect } from 'react-redux';
+import * as actions from '../actions/index.js';
 
 const mapStateToProps = (state) => {
   const { channels, currentChannelId } = state;
@@ -8,22 +9,32 @@ const mapStateToProps = (state) => {
   return { channels, currentChannelId };
 };
 
-const renderChannel = ({ id, name }, currentChannelId) => {
+const actionsCreators = {
+  toggleChannel: actions.toggleChannel,
+};
+
+const renderChannel = ({ id, name }, currentChannelId, toggleChannel) => {
+  const btnThemeClass = `btn-${currentChannelId === id ? 'primary' : 'light'}`;
   const classes = cn({
     'nav-link btn-block mb-2 text-left btn': true,
-    'btn-primary': currentChannelId === id,
-    'btn-light': !(currentChannelId === id),
+    [btnThemeClass]: true,
   });
+
+  const toggleChannelHandler = () => {
+    if (id !== currentChannelId) {
+      toggleChannel({ id });
+    }
+  };
 
   return (
     <li key={id} className="nav-item">
-      <button type="button" className={classes}>{name}</button>
+      <button type="button" className={classes} onClick={toggleChannelHandler}>{name}</button>
     </li>
   );
 };
 
 const Channels = (props) => {
-  const { channels, currentChannelId } = props;
+  const { channels, currentChannelId, toggleChannel } = props;
 
   return (
     <div className="col-3 border-right">
@@ -34,7 +45,7 @@ const Channels = (props) => {
       {
         channels.length > 0 && (
           <ul className="nav flex-column nav-pills nav-fill">
-            {channels.map((channel) => renderChannel(channel, currentChannelId))}
+            {channels.map((channel) => renderChannel(channel, currentChannelId, toggleChannel))}
           </ul>
         )
       }
@@ -42,4 +53,4 @@ const Channels = (props) => {
   );
 };
 
-export default connect(mapStateToProps, null)(Channels);
+export default connect(mapStateToProps, actionsCreators)(Channels);

@@ -10,8 +10,10 @@ const channelsReducer = createReducer([], () => {
 
 });
 
-const currentChannelIdReducer = createReducer(null, () => {
-
+const currentChannelIdReducer = createReducer(null, (builder) => {
+  builder.addCase(
+    actions.toggleChannel, (state, { payload: { id } }) => id,
+  );
 });
 
 export default {

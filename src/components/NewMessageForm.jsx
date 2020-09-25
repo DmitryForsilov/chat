@@ -28,7 +28,7 @@ const NewMessageForm = (props) => {
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.select();
-  }, [null]);
+  }, [currentChannelId]);
 
   const formik = useFormik({
     initialValues: {
@@ -43,9 +43,9 @@ const NewMessageForm = (props) => {
       } catch (error) {
         console.log(error);
         setErrors({ networkError: error.message });
+      } finally {
+        inputRef.current.select();
       }
-
-      inputRef.current.select();
     },
   });
 

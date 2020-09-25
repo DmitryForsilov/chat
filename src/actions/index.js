@@ -16,3 +16,5 @@ export const addMessage = (currentChannelId, { nickname, body }) => async () => 
     },
   });
 };
+
+export const toggleChannel = createAction('CHANNEL_TOGGLE');
