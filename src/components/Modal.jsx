@@ -12,10 +12,18 @@ const mapStateToProps = (state) => {
 const actionCreators = {
   hideModal: actions.hideModal,
   addChannel: actions.addChannel,
+  removeChannel: actions.removeChannel,
+  renameChannel: actions.renameChannel,
 };
 
 const Modal = (props) => {
-  const { modalInfo, hideModal, addChannel } = props;
+  const {
+    modalInfo,
+    hideModal,
+    addChannel,
+    removeChannel,
+    renameChannel,
+  } = props;
 
   if (!modalInfo.type) {
     return null;
@@ -23,7 +31,15 @@ const Modal = (props) => {
 
   const Component = getModal(modalInfo.type);
 
-  return <Component hideModal={hideModal} addChannel={addChannel} />;
+  return (
+    <Component
+      channel={modalInfo.channel}
+      hideModal={hideModal}
+      addChannel={addChannel}
+      removeChannel={removeChannel}
+      renameChannel={renameChannel}
+    />
+  );
 };
 
 export default connect(mapStateToProps, actionCreators)(Modal);

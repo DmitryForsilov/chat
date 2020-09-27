@@ -46,6 +46,16 @@ socket.on('newChannel', ({ data: { attributes } }) => {
   // @ts-ignore
   store.dispatch(actions.addChannelSuccess({ channel }));
 });
+socket.on('removeChannel', ({ data: { id } }) => {
+  // @ts-ignore
+  store.dispatch(actions.removeChannelSuccess({ channelId: id }));
+});
+socket.on('renameChannel', ({ data: { attributes } }) => {
+  const channel = attributes;
+
+  // @ts-ignore
+  store.dispatch(actions.renameChannelSuccess({ channel }));
+});
 
 render(
   <Provider store={store}>

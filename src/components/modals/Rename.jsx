@@ -8,12 +8,14 @@ import {
   Button,
 } from 'react-bootstrap';
 
-const Add = (props) => {
-  const { hideModal, addChannel } = props;
+const Rename = (props) => {
+  const { hideModal, renameChannel, channel } = props;
+  const { id, name } = channel;
 
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
+    inputRef.current.select();
   }, [null]);
 
   const hideModalHandler = () => {
@@ -22,11 +24,11 @@ const Add = (props) => {
 
   const formik = useFormik({
     initialValues: {
-      name: '',
+      newChannelName: name,
     },
-    onSubmit: async ({ name }, { setErrors }) => {
+    onSubmit: async ({ newChannelName }, { setErrors }) => {
       try {
-        await addChannel({ name });
+        await renameChannel({ id, name: newChannelName });
       } catch (error) {
         console.log(error);
         setErrors({ networkError: error.message });
@@ -39,16 +41,16 @@ const Add = (props) => {
   return (
     <Modal show onHide={hideModalHandler}>
       <Modal.Header closeButton>
-        <Modal.Title>Add channel</Modal.Title>
+        <Modal.Title>Rename channel</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={formik.handleSubmit}>
           <FormGroup>
             <FormControl
-              name="name"
+              name="newChannelName"
               className="mb-2"
               ref={inputRef}
-              value={formik.values.name}
+              value={formik.values.newChannelName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               disabled={formik.isSubmitting}
@@ -69,4 +71,4 @@ const Add = (props) => {
   );
 };
 
-export default Add;
+export default Rename;

@@ -28,6 +28,25 @@ export const addChannel = ({ name }) => async () => {
     },
   });
 };
+export const removeChannelSuccess = createAction('CHANNEL_REMOVE');
+export const removeChannel = ({ channelId }) => async () => {
+  const url = routes.channelPath(channelId);
+
+  await axios.delete(url);
+};
+export const renameChannelSuccess = createAction('CHANNEL_RENAME');
+export const renameChannel = (channel) => async () => {
+  const { id, name } = channel;
+  const url = routes.channelPath(id);
+
+  await axios.patch(url, {
+    data: {
+      attributes: {
+        name,
+      },
+    },
+  });
+};
 export const toggleChannel = createAction('CHANNEL_TOGGLE');
 
 export const showModal = createAction('MODAL_SHOW');
