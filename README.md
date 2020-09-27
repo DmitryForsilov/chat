@@ -3,4 +3,4 @@
 
 # Chat
 
-[Link to deployed poject](https://secure-everglades-75385.herokuapp.com/)
+[Link to deployed project](https://secure-everglades-75385.herokuapp.com/)
