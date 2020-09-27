@@ -27,14 +27,18 @@ const Rename = (props) => {
       newChannelName: name,
     },
     onSubmit: async ({ newChannelName }, { setErrors }) => {
+      if (name === newChannelName) {
+        hideModalHandler();
+
+        return;
+      }
       try {
         await renameChannel({ id, name: newChannelName });
+        hideModalHandler();
       } catch (error) {
         console.log(error);
         setErrors({ networkError: error.message });
       }
-
-      hideModalHandler();
     },
   });
 

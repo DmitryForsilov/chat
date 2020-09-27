@@ -1,5 +1,4 @@
 // @ts-check
-
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import '../assets/application.scss';
@@ -12,7 +11,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
-
 import NicknameContext from './components/NicknameContext.jsx';
 import App from './components/App.jsx';
 import rootReducer from './reducers/index.js';

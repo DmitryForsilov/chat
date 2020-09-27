@@ -11,11 +11,10 @@ const Remove = (props) => {
   const removeChannelHandler = async () => {
     try {
       await removeChannel({ channelId: channel.id });
+      hideModalHandler();
     } catch (error) {
       console.log(error.message);
     }
-
-    hideModalHandler();
   };
 
   return (

@@ -27,12 +27,11 @@ const Add = (props) => {
     onSubmit: async ({ name }, { setErrors }) => {
       try {
         await addChannel({ name });
+        hideModalHandler();
       } catch (error) {
         console.log(error);
         setErrors({ networkError: error.message });
       }
-
-      hideModalHandler();
     },
   });
 
