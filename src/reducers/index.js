@@ -1,13 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit';
 import * as actions from '../actions/index.js';
 
-const messagesReducer = createReducer([], (builder) => {
+const channelsReducer = createReducer([], (builder) => {
   builder
-    .addCase(actions.addMessageSuccess, (state, { payload: { message } }) => [...state, message]);
+    .addCase(
+      actions.addChannelSuccess, (state, { payload: { channel } }) => [...state, channel],
+    );
 });
 
-const channelsReducer = createReducer([], () => {
-
+const messagesReducer = createReducer([], (builder) => {
+  builder.addCase(
+    actions.addMessageSuccess, (state, { payload: { message } }) => [...state, message],
+  );
 });
 
 const currentChannelIdReducer = createReducer(null, (builder) => {
@@ -16,8 +20,19 @@ const currentChannelIdReducer = createReducer(null, (builder) => {
   );
 });
 
+const modalInfoReducer = createReducer({ type: null }, (builder) => {
+  builder
+    .addCase(
+      actions.showModal, (state, { payload: { type } }) => ({ type }),
+    )
+    .addCase(
+      actions.hideModal, () => ({ type: null }),
+    );
+});
+
 export default {
   channels: channelsReducer,
   messages: messagesReducer,
   currentChannelId: currentChannelIdReducer,
+  modalInfo: modalInfoReducer,
 };

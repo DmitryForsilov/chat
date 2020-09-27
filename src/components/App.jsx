@@ -2,6 +2,7 @@ import React from 'react';
 import Channels from './Channels.jsx';
 import Messages from './Messages.jsx';
 import NewMessageForm from './NewMessageForm.jsx';
+import Modal from './Modal.jsx';
 
 const App = () => (
   <div className="row h-100 pb-3">
@@ -14,6 +15,7 @@ const App = () => (
         </div>
       </div>
     </div>
+    <Modal />
   </div>
 );
 

@@ -16,7 +16,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import NicknameContext from './components/NicknameContext.jsx';
 import App from './components/App.jsx';
 import rootReducer from './reducers/index.js';
-import { addMessageSuccess } from './actions/index.js';
+import * as actions from './actions/index.js';
 
 if (process.env.NODE_ENV !== 'production') {
   localStorage.debug = 'chat:*';
@@ -38,7 +38,13 @@ socket.on('newMessage', ({ data: { attributes } }) => {
   const message = attributes;
 
   // @ts-ignore
-  store.dispatch(addMessageSuccess({ message }));
+  store.dispatch(actions.addMessageSuccess({ message }));
+});
+socket.on('newChannel', ({ data: { attributes } }) => {
+  const channel = attributes;
+
+  // @ts-ignore
+  store.dispatch(actions.addChannelSuccess({ channel }));
 });
 
 render(

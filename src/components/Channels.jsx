@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
 
 const actionsCreators = {
   toggleChannel: actions.toggleChannel,
+  showModal: actions.showModal,
 };
 
 const renderChannel = ({ id, name }, currentChannelId, toggleChannel) => {
@@ -34,13 +35,22 @@ const renderChannel = ({ id, name }, currentChannelId, toggleChannel) => {
 };
 
 const Channels = (props) => {
-  const { channels, currentChannelId, toggleChannel } = props;
+  const {
+    channels,
+    currentChannelId,
+    toggleChannel,
+    showModal,
+  } = props;
+
+  const showModalHandler = () => {
+    showModal({ type: 'add' });
+  };
 
   return (
     <div className="col-3 border-right">
       <div className="d-flex mb-2">
         <span>Channels</span>
-        <button type="button" className="ml-auto p-0 btn btn-link">+</button>
+        <button type="button" className="ml-auto p-0 btn btn-link" onClick={showModalHandler}>+</button>
       </div>
       {
         channels.length > 0 && (
