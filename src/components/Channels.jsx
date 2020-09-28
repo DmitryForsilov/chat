@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import { connect } from 'react-redux';
 import { Dropdown, Button } from 'react-bootstrap';
-import * as actions from '../actions/index.js';
+import { actions } from '../slices/index.js';
 
 const mapStateToProps = (state) => {
   const { channels, currentChannelId } = state;
