@@ -7,8 +7,7 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { connect } from 'react-redux';
-
-import * as actions from '../actions/index.js';
+import { actions } from '../slices/index.js';
 import NicknameContext from './NicknameContext.jsx';
 
 const mapStateToProps = (state) => {

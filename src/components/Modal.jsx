@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import getModal from './modals/index.js';
-import * as actions from '../actions/index.js';
+import { actions } from '../slices/index.js';
 
 const mapStateToProps = (state) => {
   const { modalInfo } = state;
