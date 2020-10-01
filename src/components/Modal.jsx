@@ -1,45 +1,28 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import getModal from './modals/index.js';
 import { actions } from '../slices/index.js';
 
-const mapStateToProps = (state) => {
-  const { modalInfo } = state;
-
-  return { modalInfo };
-};
-
-const actionCreators = {
-  hideModal: actions.hideModal,
-  addChannel: actions.addChannel,
-  removeChannel: actions.removeChannel,
-  renameChannel: actions.renameChannel,
-};
-
-const Modal = (props) => {
-  const {
-    modalInfo,
-    hideModal,
-    addChannel,
-    removeChannel,
-    renameChannel,
-  } = props;
+const Modal = () => {
+  const modalInfo = useSelector((state) => state.modalInfo);
+  const dispatch = useDispatch();
 
   if (!modalInfo.type) {
     return null;
   }
+
+  const hideModalHandler = () => {
+    dispatch(actions.hideModal());
+  };
 
   const Component = getModal(modalInfo.type);
 
   return (
     <Component
       channel={modalInfo.channel}
-      hideModal={hideModal}
-      addChannel={addChannel}
-      removeChannel={removeChannel}
-      renameChannel={renameChannel}
+      hideModalHandler={hideModalHandler}
     />
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(Modal);
+export default Modal;

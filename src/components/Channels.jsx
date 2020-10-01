@@ -1,21 +1,10 @@
 import React from 'react';
 import cn from 'classnames';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Dropdown, Button } from 'react-bootstrap';
 import { actions } from '../slices/index.js';
 
-const mapStateToProps = (state) => {
-  const { channels, currentChannelId } = state;
-
-  return { channels, currentChannelId };
-};
-
-const actionsCreators = {
-  toggleChannel: actions.toggleChannel,
-  showModal: actions.showModal,
-};
-
-const renderChannel = (channel, currentChannelId, toggleChannel, showModalHandler) => {
+const renderChannel = (channel, currentChannelId, toggleChannelHandler, showModalHandler) => {
   const { id, name, removable } = channel;
   const btnVariant = currentChannelId === id ? 'primary' : 'light';
   const classes = cn({
@@ -24,14 +13,14 @@ const renderChannel = (channel, currentChannelId, toggleChannel, showModalHandle
     'flex-grow-1': removable,
   });
 
-  const toggleChannelHandler = () => {
-    if (id !== currentChannelId) {
-      toggleChannel({ id });
-    }
-  };
-
   const renderButton = () => (
-    <Button className={classes} variant={btnVariant} onClick={toggleChannelHandler}>{name}</Button>
+    <Button
+      className={classes}
+      variant={btnVariant}
+      onClick={toggleChannelHandler(id)}
+    >
+      {name}
+    </Button>
   );
 
   const renderButtonWithDropdown = () => (
@@ -52,16 +41,17 @@ const renderChannel = (channel, currentChannelId, toggleChannel, showModalHandle
   );
 };
 
-const Channels = (props) => {
-  const {
-    channels,
-    currentChannelId,
-    toggleChannel,
-    showModal,
-  } = props;
+const Channels = () => {
+  const channelsList = useSelector(({ channels }) => channels.channelsList);
+  const currentChannelId = useSelector(({ channels }) => channels.currentChannelId);
+  const dispatch = useDispatch();
 
   const showModalHandler = (type, channel) => () => {
-    showModal({ type, channel });
+    dispatch(actions.showModal({ type, channel }));
+  };
+
+  const toggleChannelHandler = (id) => () => {
+    dispatch(actions.toggleChannel({ id }));
   };
 
   return (
@@ -71,11 +61,11 @@ const Channels = (props) => {
         <button type="button" className="ml-auto p-0 btn btn-link" onClick={showModalHandler('add')}>+</button>
       </div>
       {
-        channels.length > 0 && (
+        channelsList.length > 0 && (
           <ul className="nav flex-column nav-pills nav-fill">
             {
-              channels.map((channel) => renderChannel(
-                channel, currentChannelId, toggleChannel, showModalHandler,
+              channelsList.map((channel) => renderChannel(
+                channel, currentChannelId, toggleChannelHandler, showModalHandler,
               ))
             }
           </ul>
@@ -85,4 +75,4 @@ const Channels = (props) => {
   );
 };
 
-export default connect(mapStateToProps, actionsCreators)(Channels);
+export default Channels;
