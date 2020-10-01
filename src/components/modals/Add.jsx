@@ -7,18 +7,17 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../slices/index.js';
 
 const Add = (props) => {
-  const { hideModal, addChannel } = props;
+  const { hideModalHandler } = props;
+  const dispatch = useDispatch();
 
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
   }, [null]);
-
-  const hideModalHandler = () => {
-    hideModal();
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -26,7 +25,7 @@ const Add = (props) => {
     },
     onSubmit: async ({ name }, { setErrors }) => {
       try {
-        await addChannel({ name });
+        await dispatch(actions.addChannel({ name }));
         hideModalHandler();
       } catch (error) {
         console.log(error);

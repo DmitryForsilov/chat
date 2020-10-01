@@ -1,25 +1,13 @@
-import gon from 'gon';
 import cookies from 'js-cookie';
 import io from 'socket.io-client';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
 import faker from 'faker';
-import NicknameContext from './components/NicknameContext.jsx';
+import createStore from './store.js';
+import NicknameContext from './NicknameContext.js';
 import App from './components/App.jsx';
-import { reducers, actions } from './slices/index.js';
-
-console.log('gon', gon);
-
-const createStore = () => {
-  const store = configureStore({
-    reducer: reducers,
-    preloadedState: gon,
-  });
-
-  return store;
-};
+import { actions } from './slices/index.js';
 
 const getNickname = () => cookies.get('nickname');
 const setNickname = () => {

@@ -1,16 +1,15 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../slices/index.js';
 
 const Remove = (props) => {
-  const { hideModal, removeChannel, channel } = props;
-
-  const hideModalHandler = () => {
-    hideModal();
-  };
+  const { hideModalHandler, channel } = props;
+  const dispatch = useDispatch();
 
   const removeChannelHandler = async () => {
     try {
-      await removeChannel({ channelId: channel.id });
+      await dispatch(actions.removeChannel({ channelId: channel.id }));
       hideModalHandler();
     } catch (error) {
       console.log(error.message);

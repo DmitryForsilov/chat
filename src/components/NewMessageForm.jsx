@@ -6,23 +6,14 @@ import {
   Button,
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../slices/index.js';
-import NicknameContext from './NicknameContext.jsx';
+import NicknameContext from '../NicknameContext.js';
 
-const mapStateToProps = (state) => {
-  const { currentChannelId } = state;
-
-  return { currentChannelId };
-};
-
-const actionCreators = {
-  addMessage: actions.addMessage,
-};
-
-const NewMessageForm = (props) => {
-  const { currentChannelId, addMessage } = props;
+const NewMessageForm = () => {
+  const currentChannelId = useSelector(({ channels }) => channels.currentChannelId);
   const nickname = useContext(NicknameContext);
+  const dispatch = useDispatch();
 
   const inputRef = useRef();
   useEffect(() => {
@@ -37,7 +28,7 @@ const NewMessageForm = (props) => {
       const message = { nickname, body };
 
       try {
-        await addMessage(currentChannelId, message);
+        await dispatch(actions.addMessage(currentChannelId, message));
         resetForm();
       } catch (error) {
         console.log(error);
@@ -73,4 +64,4 @@ const NewMessageForm = (props) => {
   );
 };
 
-export default connect(mapStateToProps, actionCreators)(NewMessageForm);
+export default NewMessageForm;

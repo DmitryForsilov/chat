@@ -7,20 +7,19 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { actions } from '../../slices/index.js';
 
 const Rename = (props) => {
-  const { hideModal, renameChannel, channel } = props;
+  const { hideModalHandler, channel } = props;
   const { id, name } = channel;
+  const dispatch = useDispatch();
 
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
     inputRef.current.select();
   }, [null]);
-
-  const hideModalHandler = () => {
-    hideModal();
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +32,7 @@ const Rename = (props) => {
         return;
       }
       try {
-        await renameChannel({ id, name: newChannelName });
+        await dispatch(actions.renameChannel({ id, name: newChannelName }));
         hideModalHandler();
       } catch (error) {
         console.log(error);
