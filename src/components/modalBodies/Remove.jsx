@@ -17,18 +17,13 @@ const Remove = (props) => {
   };
 
   return (
-    <Modal show onHide={hideModalHandler}>
-      <Modal.Header closeButton>
-        <Modal.Title>Remove channel</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>Are you sure?</p>
-        <div className="d-flex justify-content-between">
-          <Button className="mr-2" variant="secondary" onClick={hideModalHandler}>Cancel</Button>
-          <Button variant="danger" onClick={removeChannelHandler}>Confirm</Button>
-        </div>
-      </Modal.Body>
-    </Modal>
+    <Modal.Body>
+      <p>Are you sure?</p>
+      <div className="d-flex justify-content-between">
+        <Button className="mr-2" variant="secondary" onClick={hideModalHandler}>Cancel</Button>
+        <Button variant="danger" onClick={removeChannelHandler}>Confirm</Button>
+      </div>
+    </Modal.Body>
   );
 };
 

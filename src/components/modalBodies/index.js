@@ -2,10 +2,10 @@ import Add from './Add.jsx';
 import Remove from './Remove.jsx';
 import Rename from './Rename.jsx';
 
-const modals = {
+const modalBodies = {
   add: Add,
   remove: Remove,
   rename: Rename,
 };
 
-export default (modalType) => modals[modalType];
+export default (modalType) => modalBodies[modalType];

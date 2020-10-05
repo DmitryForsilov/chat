@@ -18,27 +18,18 @@ const setNickname = () => {
 
 const initSocket = (store) => {
   const socket = io();
-  socket.on('newMessage', ({ data: { attributes } }) => {
-    const message = attributes;
 
-    // @ts-ignore
-    store.dispatch(actions.addMessageSuccess({ message }));
+  socket.on('newMessage', ({ data: { attributes } }) => {
+    store.dispatch(actions.addMessageSuccess({ message: attributes }));
   });
   socket.on('newChannel', ({ data: { attributes } }) => {
-    const channel = attributes;
-
-    // @ts-ignore
-    store.dispatch(actions.addChannelSuccess({ channel }));
+    store.dispatch(actions.addChannelSuccess({ channel: attributes }));
   });
   socket.on('removeChannel', ({ data: { id } }) => {
-    // @ts-ignore
     store.dispatch(actions.removeChannelSuccess({ channelId: id }));
   });
   socket.on('renameChannel', ({ data: { attributes } }) => {
-    const channel = attributes;
-
-    // @ts-ignore
-    store.dispatch(actions.renameChannelSuccess({ channel }));
+    store.dispatch(actions.renameChannelSuccess({ channel: attributes }));
   });
 };
 

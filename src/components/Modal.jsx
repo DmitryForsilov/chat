@@ -1,28 +1,39 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import getModal from './modals/index.js';
+import { Modal } from 'react-bootstrap';
+import getModalBody from './modalBodies/index.js';
 import { actions } from '../slices/index.js';
 
-const Modal = () => {
+const ModalComponent = () => {
   const modalInfo = useSelector((state) => state.modalInfo);
   const dispatch = useDispatch();
 
-  if (!modalInfo.type) {
+  const { type, channel } = modalInfo;
+
+  if (!type) {
     return null;
   }
+
+  const modalTitlesByType = {
+    add: 'Add channel',
+    remove: 'Remove channel',
+    rename: 'Rename channel',
+  };
 
   const hideModalHandler = () => {
     dispatch(actions.hideModal());
   };
 
-  const Component = getModal(modalInfo.type);
+  const BodyComponent = getModalBody(type);
 
   return (
-    <Component
-      channel={modalInfo.channel}
-      hideModalHandler={hideModalHandler}
-    />
+    <Modal show onHide={hideModalHandler}>
+      <Modal.Header closeButton>
+        <Modal.Title>{modalTitlesByType[type]}</Modal.Title>
+      </Modal.Header>
+      <BodyComponent channel={channel} hideModalHandler={hideModalHandler} />
+    </Modal>
   );
 };
 
-export default Modal;
+export default ModalComponent;
