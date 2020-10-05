@@ -7,18 +7,13 @@ import { actions } from '../slices/index.js';
 const renderChannel = (channel, currentChannelId, toggleChannelHandler, showModalHandler) => {
   const { id, name, removable } = channel;
   const btnVariant = currentChannelId === id ? 'primary' : 'light';
-  const classes = cn({
-    'text-left nav-link': true,
+  const classes = cn('text-left nav-link', {
     'btn-block mb-2': !removable,
     'flex-grow-1': removable,
   });
 
   const renderButton = () => (
-    <Button
-      className={classes}
-      variant={btnVariant}
-      onClick={toggleChannelHandler(id)}
-    >
+    <Button className={classes} variant={btnVariant} onClick={toggleChannelHandler(id)}>
       {name}
     </Button>
   );
@@ -41,6 +36,26 @@ const renderChannel = (channel, currentChannelId, toggleChannelHandler, showModa
   );
 };
 
+const renderChannelsList = (args) => {
+  const {
+    channelsList, currentChannelId, toggleChannelHandler, showModalHandler,
+  } = args;
+
+  if (channelsList.length === 0) {
+    return null;
+  }
+
+  return (
+    <ul className="nav flex-column nav-pills nav-fill">
+      {
+        channelsList.map((channel) => renderChannel(
+          channel, currentChannelId, toggleChannelHandler, showModalHandler,
+        ))
+      }
+    </ul>
+  );
+};
+
 const Channels = () => {
   const channelsList = useSelector(({ channels }) => channels.channelsList);
   const currentChannelId = useSelector(({ channels }) => channels.currentChannelId);
@@ -60,17 +75,9 @@ const Channels = () => {
         <span>Channels</span>
         <button type="button" className="ml-auto p-0 btn btn-link" onClick={showModalHandler('add')}>+</button>
       </div>
-      {
-        channelsList.length > 0 && (
-          <ul className="nav flex-column nav-pills nav-fill">
-            {
-              channelsList.map((channel) => renderChannel(
-                channel, currentChannelId, toggleChannelHandler, showModalHandler,
-              ))
-            }
-          </ul>
-        )
-      }
+      {renderChannelsList({
+        channelsList, currentChannelId, toggleChannelHandler, showModalHandler,
+      })}
     </div>
   );
 };

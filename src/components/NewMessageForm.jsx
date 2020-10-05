@@ -10,6 +10,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import { actions } from '../slices/index.js';
 import NicknameContext from '../NicknameContext.js';
 
+const renderForm = (formik, inputRef) => (
+  <Form onSubmit={formik.handleSubmit}>
+    <FormGroup>
+      <div className="input-group">
+        <FormControl
+          className="mr-2"
+          name="body"
+          aria-label="body"
+          ref={inputRef}
+          value={formik.values.body}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          disabled={formik.isSubmitting}
+        />
+        <Button type="submit" aria-label="submit" variant="primary" disabled={formik.isSubmitting}>Submit</Button>
+        <FormControl.Feedback className="d-block" type="invalid">
+          {formik.errors.networkError}
+          &nbsp;
+        </FormControl.Feedback>
+      </div>
+    </FormGroup>
+  </Form>
+);
+
 const NewMessageForm = () => {
   const currentChannelId = useSelector(({ channels }) => channels.currentChannelId);
   const nickname = useContext(NicknameContext);
@@ -39,29 +63,7 @@ const NewMessageForm = () => {
     },
   });
 
-  return (
-    <Form onSubmit={formik.handleSubmit}>
-      <FormGroup>
-        <div className="input-group">
-          <FormControl
-            className="mr-2"
-            name="body"
-            aria-label="body"
-            ref={inputRef}
-            value={formik.values.body}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            disabled={formik.isSubmitting}
-          />
-          <Button type="submit" aria-label="submit" variant="primary" disabled={formik.isSubmitting}>Submit</Button>
-          <FormControl.Feedback className="d-block" type="invalid">
-            {formik.errors.networkError}
-            &nbsp;
-          </FormControl.Feedback>
-        </div>
-      </FormGroup>
-    </Form>
-  );
+  return renderForm(formik, inputRef);
 };
 
 export default NewMessageForm;
