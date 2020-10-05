@@ -4,6 +4,8 @@
 # Chat
 Chat app. Working in real-time by websockets.
 
+This project was reviewed by Hexlet.
+
 [Link to deployed project](https://secure-everglades-75385.herokuapp.com/)
 
 ### Features:
