@@ -5,9 +5,9 @@ import NewMessageForm from './NewMessageForm.jsx';
 import Modal from './Modal.jsx';
 
 const App = () => (
-  <div className="row h-100 pb-3">
+  <div className="row h-100">
     <Channels />
-    <div className="col h-100">
+    <div className="col h-100 p-2">
       <div className="d-flex flex-column h-100">
         <Messages />
         <div className="mt-auto">
