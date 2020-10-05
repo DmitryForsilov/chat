@@ -55,7 +55,7 @@ const Channels = () => {
   };
 
   return (
-    <div className="col-3 border-right p-2">
+    <div className="col-4 col-sm-3 border-right p-2">
       <div className="d-flex mb-2">
         <span>Channels</span>
         <button type="button" className="ml-auto p-0 btn btn-link" onClick={showModalHandler('add')}>+</button>
