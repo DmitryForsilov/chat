@@ -9,10 +9,10 @@ This project was reviewed by Hexlet.
 [Link to deployed project](https://secure-everglades-75385.herokuapp.com/)
 
 ### Features:
-- Create messages
-- Create channels
-- Delete channels
-- Rename channels
+- Creating messages
+- Creating channels
+- Deleting channels
+- Renaming channels
 
 ### Used in project:
 - **react** + **hooks**
